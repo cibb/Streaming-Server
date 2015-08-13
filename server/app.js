@@ -29,6 +29,7 @@ module.exports = function appConf(done) {
             counter = counter + 1;
             console.log('A user connected || Total: ' + counter);
             socket.on('disconnect', function onDisconnet(){
+                counter = counter - 1;
                 console.log('A user disconnected');
             });
         });
