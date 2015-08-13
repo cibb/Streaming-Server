@@ -20,8 +20,8 @@ var webRtcPeer;
 window.onload = function() {
 	video = document.getElementById('video');
 
-	document.getElementById('viewer').addEventListener('click', function() { viewer(); } );
-	document.getElementById('terminate').addEventListener('click', function() { stop(); } );
+	viewer();
+	document.getElementById('stop').addEventListener('click', function() { stop(); } );
 }
 
 window.onbeforeunload = function() {
