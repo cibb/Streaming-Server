@@ -30,8 +30,7 @@ module.exports = function route(app, callback) {
                     password: req.body.password
                 }
             }).on('complete', function(data, response) {
-                    console.log(response);
-                if (response.statusCode == 201) {
+                if (response.statusCode == 200) {
                     app.set('session', true);
                     res.redirect('/play');
                 }
