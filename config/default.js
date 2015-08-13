@@ -6,7 +6,7 @@ module.exports = {
     },
     server: {
         ip: process.env.IP || '127.0.0.1',
-        port: process.env.PORT || 4040
+        port: process.env.PORT || 80
     },
     cluster: {
         enabled: false
