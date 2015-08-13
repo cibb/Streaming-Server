@@ -64,22 +64,22 @@ function onOfferViewer(error, offerSdp) {
 	sendMessage(message);
 }
 
-// function viewer() {
-// 	if (!webRtcPeer) {
-// 		showSpinner(video);
+function viewer() {
+	if (!webRtcPeer) {
+		showSpinner(video);
 
-// 		var options = {
-// 			remoteVideo: video,
-// 			onicecandidate : onIceCandidate
-// 		}
+		var options = {
+			remoteVideo: video,
+			onicecandidate : onIceCandidate
+		}
 
-// 		webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(error) {
-// 			if(error) return onError(error);
+		webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(error) {
+			if(error) return onError(error);
 
-// 			this.generateOffer(onOfferViewer);
-// 		});
-// 	}
-// }
+			this.generateOffer(onOfferViewer);
+		});
+	}
+}
 
 
 function onIceCandidate(candidate) {
