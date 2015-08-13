@@ -10,7 +10,7 @@ module.exports = function bootstrap(worker) {
         var ip = config.get(['server', 'ip']);
         var port = config.get(['server', 'port']);
 
-        server.listen(port, ip, function onServerListening() {
+        server.listen(port, function onServerListening() {
             if (worker) {
                 return console.log('id:%d pid:%d listening on %s:%d in %s mode', worker.id, process.pid, ip, port, app.get('env'));
             }

@@ -1,0 +1,15 @@
+#WebStorm IDE
+.idea/*
+
+#NetBeans project
+nbproject/*
+
+#Sublime tags
+.tags
+.tags_sorted_by_file
+*.sublime-project
+*.sublime-workspace
+
+node_modules
+.DS_Store
+npm-debug.log
