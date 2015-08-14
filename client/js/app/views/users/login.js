@@ -12,7 +12,7 @@ module.exports = Base.extend({
     events: _.extend({}, Base.prototype.events, {
         'click .submit-login': 'onSubmitLogin'
     }),
-    onSubmitLogin: function() {
+    onSubmitLogin: function(event) {
         event.preventDefault();
      
         var $form = $('form');

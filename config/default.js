@@ -2,11 +2,11 @@
 
 module.exports = {
     api: {
-        host: 'http://jw.ncci.com.ar/api/'
+        host: 'http://api.ncci.com.ar/'
     },
     server: {
         ip: process.env.IP || '127.0.0.1',
-        port: process.env.PORT || 80
+        port: process.env.PORT || 8080
     },
     cluster: {
         enabled: false

@@ -45,7 +45,8 @@ module.exports = function route(app, callback) {
         router.get('/login', handler);
 
         function handler(req, res, next) {
-            res.render('index');
+            // app.render('login',function(err, html){});
+            // res.render('index');
         }
 
         return handler;
@@ -57,6 +58,26 @@ module.exports = function route(app, callback) {
         function handler(req, res) {
             if (!!app.settings.session) {
                 res.render('play');
+            }
+        }
+    }
+
+    function audioGet() {
+        router.get('/audio', handler);
+
+        function handler(req, res) {
+            if (!!app.settings.session) {
+                res.render('audio');
+            }
+        }
+    }
+
+    function videoGet() {
+        router.get('/video', handler);
+
+        function handler(req, res) {
+            if (!!app.settings.session) {
+                res.render('video');
             }
         }
     }
@@ -75,7 +96,9 @@ module.exports = function route(app, callback) {
         loginPost: loginPost(),
         loginGet: loginGet(),
         playGet: playGet(),
-        logout: logout()
+        logout: logout(),
+        audio: audioGet(),
+        video: videoGet()
     };
 
     callback(router);

@@ -53,9 +53,18 @@
 .icon-bin:before {
 	content: "\e608";
 }
+.icon-power-cord:before {
+	content: "\e60c";
+}
 .icon-cross:before {
 	content: "\e60b";
 }
 .icon-enter:before {
 	content: "\e609";
+}
+.icon-play3:before {
+	content: "\e60d";
+}
+.icon-stop2:before {
+	content: "\e60e";
 }

@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('underscore');
+var Backbone = require('backbone');
 var Base = require('../../bases/view');
 var template = require('../../../../templates/partials/play.html');
 
@@ -7,26 +9,20 @@ module.exports = Base.extend({
     id: 'play',
     tagName: 'section',
     template: template,
-    events: {
-        'click #viewer': onStartViewer
-    }
+    events: _.extend({}, Base.prototype.events, {
+        'click .audio': onAudio,
+        'click .video': onVideo
+    })
 });
 
-function onStartViewer() {
-    event.preventDefault();
+function onAudio(event) {
+    event.preventDefaul();
 
-    if (!webRtcPeer) {
-        showSpinner(video);
-
-        var options = {
-            remoteVideo: video,
-            onicecandidate : onIceCandidate
-        }
-
-        webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(error) {
-            if(error) return onError(error);
-
-            this.generateOffer(onOfferViewer);
-        });
-    }
+    window.location = 'pdev.ncci.com.ar/audio';
 }
+function onVideo(event) {
+    event.preventDefaul();
+
+    window.location = 'pdev.ncci.com.ar/video';
+}
+

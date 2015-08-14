@@ -18,121 +18,114 @@ var video;
 var webRtcPeer;
 
 window.onload = function() {
-	video = document.getElementById('video');
+    video = document.getElementById('videoPlayer');
 
-	viewer();
-	document.getElementById('stop').addEventListener('click', function() { stop(); } );
+
+    document.getElementById('play').addEventListener('click', function() { viewer(); } );
+    document.getElementById('stop').addEventListener('click', function() { stop(); } );
 }
 
 window.onbeforeunload = function() {
-	ws.close();
+    ws.close();
 }
 
 ws.onmessage = function(message) {
-	var parsedMessage = JSON.parse(message.data);
+    var parsedMessage = JSON.parse(message.data);
 
-	switch (parsedMessage.id) {
-	case 'viewerResponse':
-		viewerResponse(parsedMessage);
-		break;
-	case 'stopCommunication':
-		dispose();
-		break;
-	case 'iceCandidate':
-		webRtcPeer.addIceCandidate(parsedMessage.candidate)
-		break;
-	default:
-	}
+    switch (parsedMessage.id) {
+    case 'viewerResponse':
+        viewerResponse(parsedMessage);
+        break;
+    case 'stopCommunication':
+        dispose();
+        break;
+    case 'iceCandidate':
+        webRtcPeer.addIceCandidate(parsedMessage.candidate)
+        break;
+    default:
+    }
 }
 
 function viewerResponse(message) {
-	if (message.response != 'accepted') {
-		var errorMsg = message.message ? message.message : 'Unknow error';
-		dispose();
-	} else {
-		webRtcPeer.processAnswer(message.sdpAnswer);
-	}
+    if (message.response != 'accepted') {
+        var errorMsg = message.message ? message.message : 'Unknow error';
+        dispose();
+    } else {
+        webRtcPeer.processAnswer(message.sdpAnswer);
+    }
 }
 
 function onOfferViewer(error, offerSdp) {
-	if (error) return onError(error)
+    if (error) return onError(error)
 
-	var message = {
-		id : 'viewer',
-		sdpOffer : offerSdp
-	}
-	sendMessage(message);
+    var message = {
+        id : 'viewer',
+        sdpOffer : offerSdp
+    }
+    sendMessage(message);
 }
 
 function viewer() {
-	if (!webRtcPeer) {
-		showSpinner(video);
+    if (!webRtcPeer) {
+        showSpinner(video);
 
-		var options = {
-			remoteVideo: video,
-			onicecandidate : onIceCandidate
-		}
+        var options = {
+            remoteVideo: video,
+            onicecandidate : onIceCandidate
+        }
 
-		webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(error) {
-			if(error) return onError(error);
+        webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(error) {
+            if(error) return onError(error);
 
-			this.generateOffer(onOfferViewer);
-		});
-	}
+            this.generateOffer(onOfferViewer);
+        });
+    }
 }
 
 
 function onIceCandidate(candidate) {
-	   console.log('Local candidate' + JSON.stringify(candidate));
+       console.log('Local candidate' + JSON.stringify(candidate));
 
-	   var message = {
-	      id : 'onIceCandidate',
-	      candidate : candidate
-	   }
-	   sendMessage(message);
+       var message = {
+          id : 'onIceCandidate',
+          candidate : candidate
+       }
+       sendMessage(message);
 }
 
 function stop() {
-	if (webRtcPeer) {
-		var message = {
-				id : 'stop'
-		}
-		sendMessage(message);
-		dispose();
-	}
+    if (webRtcPeer) {
+        var message = {
+                id : 'stop'
+        }
+        sendMessage(message);
+        dispose();
+    }
 }
 
 function dispose() {
-	if (webRtcPeer) {
-		webRtcPeer.dispose();
-		webRtcPeer = null;
-	}
-	hideSpinner(video);
+    if (webRtcPeer) {
+        webRtcPeer.dispose();
+        webRtcPeer = null;
+    }
+    hideSpinner(video);
 }
 
 function sendMessage(message) {
-	var jsonMessage = JSON.stringify(message);
-	console.log('Senging message: ' + jsonMessage);
-	ws.send(jsonMessage);
+    var jsonMessage = JSON.stringify(message);
+    console.log('Senging message: ' + jsonMessage);
+    ws.send(jsonMessage);
 }
 
 function showSpinner() {
-	for (var i = 0; i < arguments.length; i++) {
-		// arguments[i].style.background = 'center transparent url("./img/spinner.gif") no-repeat';
-	}
+    for (var i = 0; i < arguments.length; i++) {
+        // arguments[i].style.background = 'center transparent url("./img/spinner.gif") no-repeat';
+    }
 }
 
 function hideSpinner() {
-	for (var i = 0; i < arguments.length; i++) {
-		// arguments[i].src = '';
-		// arguments[i].style.background = '';
-	}
+    for (var i = 0; i < arguments.length; i++) {
+        // arguments[i].src = '';
+        // arguments[i].style.background = '';
+    }
 }
-
-/**
- * Lightbox utility (to display media pipeline image in a modal dialog)
- */
-$(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
-	event.preventDefault();
-	$(this).ekkoLightbox();
-});

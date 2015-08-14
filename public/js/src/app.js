@@ -29,7 +29,7 @@ function toJSON() {
 
 module.exports = View;
 
-},{"backbone":"backbone","ractive":14,"underscore":"underscore"}],2:[function(require,module,exports){
+},{"backbone":"backbone","ractive":18,"underscore":"underscore"}],2:[function(require,module,exports){
 'use strict';
 
 var Backbone = require('backbone');
@@ -48,19 +48,24 @@ module.exports = io();
 },{}],4:[function(require,module,exports){
 'use strict';
 
+// TODO: make this works jajaja
 var Backbone = require('backbone');
 var BaseView = require('./bases/view');
 var HomeView = require('./views/users/login');
 var LoginView = require('./views/users/login');
 var RegisterView = require('./views/users/register');
 var playView = require('./views/stream/play');
+var audioView = require('./views/stream/audio');
+var videoView = require('./views/stream/video');
 
 module.exports = Backbone.Router.extend({
     routes: {
         '': home,
         login: login,
         register: register,
-        '/play': play
+        play: play,
+        audio: audio,
+        video: video
     }
 });
 
@@ -69,6 +74,7 @@ function home() {
 }
 
 function login() {
+    console.log('login');
 	this.app.show(new LoginView());
 }
 
@@ -80,8 +86,17 @@ function play() {
     this.app.show(new playView());
 }
 
+function audio() {
+    this.app.show(new audioView());
+}
 
-},{"./bases/view":1,"./views/stream/play":8,"./views/users/login":9,"./views/users/register":10,"backbone":"backbone"}],5:[function(require,module,exports){
+function video() {
+    this.app.show(new videoView());
+}
+
+
+
+},{"./bases/view":1,"./views/stream/audio":8,"./views/stream/play":9,"./views/stream/video":10,"./views/users/login":11,"./views/users/register":12,"backbone":"backbone"}],5:[function(require,module,exports){
 'use strict';
 
 var Backbone = require('backbone');
@@ -146,6 +161,24 @@ module.exports = LoaderView;
 },{"backbone":"backbone"}],8:[function(require,module,exports){
 'use strict';
 
+var _ = require('underscore');
+var Base = require('../../bases/view');
+var template = require('../../../../templates/partials/audio.html');
+
+module.exports = Base.extend({
+    id: 'login',
+    tagName: 'section',
+    template: template,
+    events: _.extend({}, Base.prototype.events, {
+        'click .submit-login': 'onSubmitLogin'
+    }),
+});
+
+},{"../../../../templates/partials/audio.html":13,"../../bases/view":1,"underscore":"underscore"}],9:[function(require,module,exports){
+'use strict';
+
+var _ = require('underscore');
+var Backbone = require('backbone');
 var Base = require('../../bases/view');
 var template = require('../../../../templates/partials/play.html');
 
@@ -153,30 +186,39 @@ module.exports = Base.extend({
     id: 'play',
     tagName: 'section',
     template: template,
-    events: {
-        'click #viewer': onStartViewer
-    }
+    events: _.extend({}, Base.prototype.events, {
+        'click .audio': onAudio,
+        'click .video': onVideo
+    })
 });
 
-function onStartViewer() {
-    event.preventDefault();
+function onAudio(event) {
+    event.preventDefaul();
 
-    if (!webRtcPeer) {
-        showSpinner(video);
-
-        var options = {
-            remoteVideo: video,
-            onicecandidate : onIceCandidate
-        }
-
-        webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(error) {
-            if(error) return onError(error);
-
-            this.generateOffer(onOfferViewer);
-        });
-    }
+    window.location = 'pdev.ncci.com.ar/audio';
 }
-},{"../../../../templates/partials/play.html":12,"../../bases/view":1}],9:[function(require,module,exports){
+function onVideo(event) {
+    event.preventDefaul();
+
+    window.location = 'pdev.ncci.com.ar/video';
+}
+
+
+},{"../../../../templates/partials/play.html":15,"../../bases/view":1,"backbone":"backbone","underscore":"underscore"}],10:[function(require,module,exports){
+'use strict';
+
+var _ = require('underscore');
+var Base = require('../../bases/view');
+var template = require('../../../../templates/partials/video.html');
+
+module.exports = Base.extend({
+    id: 'video',
+    tagName: 'section',
+    template: template,
+    events: {}
+});
+
+},{"../../../../templates/partials/video.html":16,"../../bases/view":1,"underscore":"underscore"}],11:[function(require,module,exports){
 'use strict';
 
 var _ = require('underscore');
@@ -191,7 +233,7 @@ module.exports = Base.extend({
     events: _.extend({}, Base.prototype.events, {
         'click .submit-login': 'onSubmitLogin'
     }),
-    onSubmitLogin: function() {
+    onSubmitLogin: function(event) {
         event.preventDefault();
      
         var $form = $('form');
@@ -234,7 +276,7 @@ function showNotification (title, message) {
     });
 }
 
-},{"../../../../templates/partials/login.html":11,"../../bases/view":1,"backbone":"backbone","underscore":"underscore"}],10:[function(require,module,exports){
+},{"../../../../templates/partials/login.html":14,"../../bases/view":1,"backbone":"backbone","underscore":"underscore"}],12:[function(require,module,exports){
 'use strict';
 
 var Base = require('../../bases/view');
@@ -308,13 +350,17 @@ function showNotification (title, message) {
     });
 }
 
-},{"../../../../templates/users/register.html":13,"../../bases/view":1,"ws":15}],11:[function(require,module,exports){
-module.exports={"v":3,"t":[{"t":7,"e":"div","a":{"class":"header-login"},"f":[{"t":7,"e":"div","a":{"class":"column-50"},"f":[{"t":7,"e":"form","a":{"action":"/login","method":"post"},"f":[{"t":7,"e":"fieldset","a":{"class":"fake-input icon icon-user"},"f":[{"t":7,"e":"input","a":{"type":"text","name":"username","placeholder":"Usuario"}}]}," ",{"t":7,"e":"fieldset","a":{"class":"fake-input icon icon-key"},"f":[{"t":7,"e":"input","a":{"type":"password","name":"password","placeholder":"Contraseña"}}]}," ",{"t":7,"e":"fieldset","f":[{"t":7,"e":"a","a":{"class":"btn submit-login"},"f":["Entrar"]}]}]}]}," ",{"t":7,"e":"div","a":{"class":"column-50"},"f":[{"t":7,"e":"h2","f":["Bienvenido"]}," ",{"t":7,"e":"p","f":["Por favor complete sus datos. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non bibendum tortor. Nulla nec aliquam felis, quis pretium lacus. Donec vulputate ut leo eget volutpat."]}]}]}," ",{"t":7,"e":"div","a":{"class":"footer-login clearfix"},"f":[{"t":7,"e":"span","a":{"class":"align-left lostpassword"},"f":["Perdio su contraseña?"]}," ",{"t":7,"e":"span","a":{"class":"align-rigth"},"f":["No tiene cuenta? ",{"t":7,"e":"a","a":{"href":""},"f":["Pídala aquí"]}]}]}]}
-},{}],12:[function(require,module,exports){
-module.exports={"v":3,"t":[{"t":7,"e":"button","a":{"id":"stop","class":"hide"},"f":["stop"]}," ",{"t":7,"e":"video","a":{"id":"video","controls":"controls"}}," ",{"t":7,"e":"script","a":{"type":"text/javascript","src":"/js/viewer.js"}}," ",{"t":7,"e":"script","a":{"type":"text/javascript","src":"/js/adapter.js"}}," ",{"t":7,"e":"script","a":{"type":"text/javascript","src":"/js/kurento-utils.js"}}]}
-},{}],13:[function(require,module,exports){
-module.exports={"v":3,"t":[{"t":7,"e":"div","a":{"class":"header-create-user"},"f":[{"t":7,"e":"div","a":{"class":"column-50"},"f":[{"t":7,"e":"form","f":[{"t":7,"e":"fieldset","a":{"class":"fake-input icon icon-user"},"f":[{"t":7,"e":"input","a":{"type":"text","name":"username","placeholder":"Nombre"}}]}," ",{"t":7,"e":"fieldset","a":{"class":"fake-input icon icon-user"},"f":[{"t":7,"e":"input","a":{"type":"text","name":"lastname","placeholder":"Apellido"}}]}," ",{"t":7,"e":"fieldset","a":{"class":"fake-input icon icon-key"},"f":[{"t":7,"e":"input","a":{"type":"password","name":"password","placeholder":"Contraseña"}}]}," ",{"t":7,"e":"fieldset","f":[{"t":7,"e":"a","a":{"class":"btn submit-login"},"f":["Crear Usuario"]}]}]}]}]}," ",{"t":7,"e":"div","a":{"class":"footer-login clearfix"},"f":[{"t":7,"e":"span","a":{"class":"align-left lostpassword"},"f":["Perdio su contraseña?"]}," ",{"t":7,"e":"span","a":{"class":"align-rigth"},"f":["No tiene cuenta? ",{"t":7,"e":"a","a":{"href":""},"f":["Pídala aquí"]}]}]}]}
+},{"../../../../templates/users/register.html":17,"../../bases/view":1,"ws":19}],13:[function(require,module,exports){
+module.exports={"v":3,"t":[{"t":7,"e":"div","a":{"class":"control-panel"},"f":[{"t":7,"e":"ul","f":[{"t":7,"e":"li","f":[{"t":7,"e":"a","a":{"id":"play","class":"icon icon-play3","href":"#"}}]}," ",{"t":7,"e":"li","f":[{"t":7,"e":"a","a":{"id":"stop","class":"icon icon-stop2","href":"#"}}]}]}]}," ",{"t":7,"e":"audio","a":{"id":"videoPlayer","autoplay":0}}," ",{"t":7,"e":"script","a":{"type":"text/javascript","src":"/js/viewer.js"}}," ",{"t":7,"e":"script","a":{"type":"text/javascript","src":"/js/adapter.js"}}," ",{"t":7,"e":"script","a":{"type":"text/javascript","src":"/js/kurento-utils.js"}}]}
 },{}],14:[function(require,module,exports){
+module.exports={"v":3,"t":[{"t":7,"e":"section","a":{"id":"login"},"f":[{"t":7,"e":"div","a":{"class":"header-login"},"f":[{"t":7,"e":"div","a":{"class":"column-50"},"f":[{"t":7,"e":"form","a":{"action":"/login","method":"post"},"f":[{"t":7,"e":"fieldset","a":{"class":"fake-input icon icon-user"},"f":[{"t":7,"e":"input","a":{"type":"text","name":"username","placeholder":"Usuario"}}]}," ",{"t":7,"e":"fieldset","a":{"class":"fake-input icon icon-key"},"f":[{"t":7,"e":"input","a":{"type":"password","name":"password","placeholder":"Contraseña"}}]}," ",{"t":7,"e":"fieldset","f":[{"t":7,"e":"a","a":{"class":"btn submit-login"},"f":["Entrar"]}]}]}]}," ",{"t":7,"e":"div","a":{"class":"column-50"},"f":[{"t":7,"e":"h2","f":["Bienvenido"]}," ",{"t":7,"e":"p","f":["Por favor complete sus datos. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non bibendum tortor. Nulla nec aliquam felis, quis pretium lacus. Donec vulputate ut leo eget volutpat."]}]}]}," ",{"t":7,"e":"div","a":{"class":"footer-login clearfix"},"f":[{"t":7,"e":"span","a":{"class":"align-left lostpassword"},"f":["Perdio su contraseña?"]}," ",{"t":7,"e":"span","a":{"class":"align-rigth"},"f":["No tiene cuenta? ",{"t":7,"e":"a","a":{"href":""},"f":["Pídala aquí"]}]}]}]}]}
+},{}],15:[function(require,module,exports){
+module.exports={"v":3,"t":[{"t":7,"e":"section","a":{"id":"selectMedia"},"f":[{"t":7,"e":"a","a":{"href":"/audio","class":"audio"},"f":["Audio"]}," ",{"t":7,"e":"a","a":{"href":"/video","class":"video"},"f":["Video"]}]}]}
+},{}],16:[function(require,module,exports){
+module.exports={"v":3,"t":[{"t":7,"e":"div","a":{"class":"control-panel"},"f":[{"t":7,"e":"ul","f":[{"t":7,"e":"li","f":[{"t":7,"e":"a","a":{"id":"play","class":"icon icon-play3","href":"#"}}]}," ",{"t":7,"e":"li","f":[{"t":7,"e":"a","a":{"id":"stop","class":"icon icon-stop2","href":"#"}}]}]}]}," ",{"t":7,"e":"video","a":{"id":"videoPlayer","controls":"controls","autoplay":0}}," ",{"t":7,"e":"script","a":{"type":"text/javascript","src":"/js/viewer.js"}}," ",{"t":7,"e":"script","a":{"type":"text/javascript","src":"/js/adapter.js"}}," ",{"t":7,"e":"script","a":{"type":"text/javascript","src":"/js/kurento-utils.js"}}]}
+},{}],17:[function(require,module,exports){
+module.exports={"v":3,"t":[{"t":7,"e":"div","a":{"class":"header-create-user"},"f":[{"t":7,"e":"div","a":{"class":"column-50"},"f":[{"t":7,"e":"form","f":[{"t":7,"e":"fieldset","a":{"class":"fake-input icon icon-user"},"f":[{"t":7,"e":"input","a":{"type":"text","name":"username","placeholder":"Nombre"}}]}," ",{"t":7,"e":"fieldset","a":{"class":"fake-input icon icon-user"},"f":[{"t":7,"e":"input","a":{"type":"text","name":"lastname","placeholder":"Apellido"}}]}," ",{"t":7,"e":"fieldset","a":{"class":"fake-input icon icon-key"},"f":[{"t":7,"e":"input","a":{"type":"password","name":"password","placeholder":"Contraseña"}}]}," ",{"t":7,"e":"fieldset","f":[{"t":7,"e":"a","a":{"class":"btn submit-login"},"f":["Crear Usuario"]}]}]}]}]}," ",{"t":7,"e":"div","a":{"class":"footer-login clearfix"},"f":[{"t":7,"e":"span","a":{"class":"align-left lostpassword"},"f":["Perdio su contraseña?"]}," ",{"t":7,"e":"span","a":{"class":"align-rigth"},"f":["No tiene cuenta? ",{"t":7,"e":"a","a":{"href":""},"f":["Pídala aquí"]}]}]}]}
+},{}],18:[function(require,module,exports){
 /*
 	Ractive.js v0.7.3
 	Sat Apr 25 2015 13:52:38 GMT-0400 (EDT) - commit da40f81c660ba2f09c45a09a9c20fdd34ee36d80
@@ -16935,7 +16981,7 @@ module.exports={"v":3,"t":[{"t":7,"e":"div","a":{"class":"header-create-user"},"
 }));
 //# sourceMappingURL=ractive.js.map
 
-},{}],15:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 
 /**
  * Module dependencies.
@@ -16980,4 +17026,4 @@ function ws(uri, protocols, opts) {
 
 if (WebSocket) ws.prototype = WebSocket.prototype;
 
-},{}]},{},[1,2,3,4,5,6,7,8,9,10]);
+},{}]},{},[1,2,3,4,5,6,7,8,9,10,11,12]);
