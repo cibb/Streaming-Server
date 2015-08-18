@@ -48,7 +48,6 @@ module.exports = io();
 },{}],4:[function(require,module,exports){
 'use strict';
 
-// TODO: make this works jajaja
 var Backbone = require('backbone');
 var BaseView = require('./bases/view');
 var HomeView = require('./views/users/login');
@@ -61,11 +60,11 @@ var videoView = require('./views/stream/video');
 module.exports = Backbone.Router.extend({
     routes: {
         '': home,
-        login: login,
-        register: register,
-        play: play,
-        audio: audio,
-        video: video
+        'login': login,
+        'register': register,
+        'play': play,
+        'audio': audio,
+        'video': video
     }
 });
 
@@ -74,7 +73,6 @@ function home() {
 }
 
 function login() {
-    console.log('login');
 	this.app.show(new LoginView());
 }
 
@@ -114,7 +112,10 @@ function initialize() {
     this.loader = new LoaderView();
     this.router = new Router();
     this.router.app = this;
-    Backbone.history.start({pushState: true})
+    Backbone.history.start({ 
+        pushState: true,
+        hashChange: false
+    });
 }
 
 function show(view) {
@@ -186,22 +187,8 @@ module.exports = Base.extend({
     id: 'play',
     tagName: 'section',
     template: template,
-    events: _.extend({}, Base.prototype.events, {
-        'click .audio': onAudio,
-        'click .video': onVideo
-    })
+    events: _.extend({}, Base.prototype.events, {})
 });
-
-function onAudio(event) {
-    event.preventDefaul();
-
-    window.location = 'pdev.ncci.com.ar/audio';
-}
-function onVideo(event) {
-    event.preventDefaul();
-
-    window.location = 'pdev.ncci.com.ar/video';
-}
 
 
 },{"../../../../templates/partials/play.html":15,"../../bases/view":1,"backbone":"backbone","underscore":"underscore"}],10:[function(require,module,exports){

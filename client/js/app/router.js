@@ -1,6 +1,5 @@
 'use strict';
 
-// TODO: make this works jajaja
 var Backbone = require('backbone');
 var BaseView = require('./bases/view');
 var HomeView = require('./views/users/login');
@@ -13,11 +12,11 @@ var videoView = require('./views/stream/video');
 module.exports = Backbone.Router.extend({
     routes: {
         '': home,
-        login: login,
-        register: register,
-        play: play,
-        audio: audio,
-        video: video
+        'login': login,
+        'register': register,
+        'play': play,
+        'audio': audio,
+        'video': video
     }
 });
 
@@ -26,7 +25,6 @@ function home() {
 }
 
 function login() {
-    console.log('login');
 	this.app.show(new LoginView());
 }
 

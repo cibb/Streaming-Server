@@ -119,13 +119,13 @@ function sendMessage(message) {
 
 function showSpinner() {
     for (var i = 0; i < arguments.length; i++) {
-        // arguments[i].style.background = 'center transparent url("./img/spinner.gif") no-repeat';
+        arguments[i].style.background = 'center transparent url("../img/spinner.gif") no-repeat';
     }
 }
 
 function hideSpinner() {
     for (var i = 0; i < arguments.length; i++) {
-        // arguments[i].src = '';
-        // arguments[i].style.background = '';
+        arguments[i].src = '';
+        arguments[i].style.background = '';
     }
 }

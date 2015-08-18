@@ -168,6 +168,7 @@ a:hover { text-decoration: none; }
   display: block;
   margin: auto;
   width: 640px;
+  height: 480px;
 }
 
 #selectMedia {

@@ -22,7 +22,7 @@ var MEDIA_CONSTRAINTS = {
         video: {
             mandatory: {
                 maxWidth: 640,
-                maxFrameRate: 15,
+                maxFrameRate: 30,
                 minFrameRate: 15
             }
         }

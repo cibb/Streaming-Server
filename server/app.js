@@ -8,9 +8,9 @@ var express = require('express');
 var http = require('http');
 var https = require('https');
 var routers = require('./routers');
+var session = require('express-session');
 var socketIo = require('socket.io');
 var path = require('path');
-var passport = require('passport');
 
 module.exports = function appConf(done) {
     asynquence().or(fail)
@@ -37,11 +37,8 @@ module.exports = function appConf(done) {
         app.use(cookieParser());
         app.set('headers', headers);
 
-        app.set('session', '');
-        app.use(passport.initialize());
-        app.use(passport.session());
-
-        
+        app.use(session({ secret: 'metienenrepodrido', cookie: { maxAge: 60000 }, resave: true, saveUninitialized: true }));
+     
         app.disable('x-powered-by');
         app.disable('etag');
         app.use(bodyParser.json());

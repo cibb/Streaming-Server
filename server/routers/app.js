@@ -8,17 +8,13 @@ var utils = require('../../shared/utils');
 module.exports = function route(app, callback) {
     var router = new Router();
 
-    function home() {
-        router.get('/', handler);
-
-        function handler(req, res, next) {
-            res.render('index');
-        }
-
-        return handler;
+    router.get('/', handlerHome);
+    function handlerHome(req, res) {
+        res.render('index');
     }
 
-    function loginPost() {
+
+    function login() {
         router.post('/login', handler);
 
         function handler(req, res, next) {
@@ -31,7 +27,9 @@ module.exports = function route(app, callback) {
                 }
             }).on('complete', function(data, response) {
                 if (data.success) {
-                    app.set('session', true);
+                    req.session.user = req.body.username;
+                    req.session.token = '';
+                    req.session.logged = true;
                     res.redirect('/play');
                 }
             });
@@ -41,64 +39,26 @@ module.exports = function route(app, callback) {
         return handler;
     }
 
-    function loginGet() {
-        router.get('/login', handler);
-
-        function handler(req, res, next) {
-            // app.render('login',function(err, html){});
-            // res.render('index');
-        }
-
-        return handler;
-    }
-
-    function playGet() {
-        router.get('/play', handler);
-
-        function handler(req, res) {
-            if (!!app.settings.session) {
-                res.render('play');
-            }
-        }
-    }
-
-    function audioGet() {
-        router.get('/audio', handler);
-
-        function handler(req, res) {
-            if (!!app.settings.session) {
-                res.render('audio');
-            }
-        }
-    }
-
-    function videoGet() {
-        router.get('/video', handler);
-
-        function handler(req, res) {
-            if (!!app.settings.session) {
-                res.render('video');
-            }
-        }
-    }
-
     function logout() {
         router.get('/logout', handler);
 
         function handler(req, res) {
-            app.set('session', false);
+            req.session.logged = false;
             res.redirect('/');
         }
     }
 
+    router.get('*', handlerGet);
+    function handlerGet(req, res) {
+        if (req.session.logged) {
+            res.render('index');
+        } else {
+            res.redirect('/');
+        }
+    }
     router.routes = {
-        home: home(),
-        loginPost: loginPost(),
-        loginGet: loginGet(),
-        playGet: playGet(),
-        logout: logout(),
-        audio: audioGet(),
-        video: videoGet()
+        login: login(),
+        logout: logout()
     };
 
     callback(router);

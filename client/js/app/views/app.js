@@ -15,7 +15,10 @@ function initialize() {
     this.loader = new LoaderView();
     this.router = new Router();
     this.router.app = this;
-    Backbone.history.start({pushState: true})
+    Backbone.history.start({ 
+        pushState: true,
+        hashChange: false
+    });
 }
 
 function show(view) {
