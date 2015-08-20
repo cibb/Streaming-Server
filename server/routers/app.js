@@ -10,7 +10,9 @@ module.exports = function route(app, callback) {
 
     router.get('/', handlerHome);
     function handlerHome(req, res) {
-        res.render('index');
+        var mobile = utils.isMobile(req);
+
+        res.render('index', { mobile: mobile });
     }
 
 
@@ -33,7 +35,6 @@ module.exports = function route(app, callback) {
                     res.redirect('/play');
                 }
             });
-
         }
 
         return handler;
@@ -50,10 +51,12 @@ module.exports = function route(app, callback) {
 
     router.get('*', handlerGet);
     function handlerGet(req, res) {
+        var mobile = utils.isMobile(req);
+
         if (req.session.logged) {
-            res.render('index');
+            res.render('index', { mobile: mobile });
         } else {
-            res.redirect('/');
+            res.redirect('/', { mobile: mobile });
         }
     }
     router.routes = {

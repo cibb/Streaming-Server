@@ -138,61 +138,6 @@ a:hover { text-decoration: none; }
   padding-bottom: 45px;
 }
 
-/*#content {
-  display: block;
-  width: 100%;
-  background: #fff;
-  padding: 25px 20px;
-  padding-bottom: 35px;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
-  -moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
-}
-*/
-/* pagina de reproductor */
-.control-panel {
-    background-color: #ffffff;
-    border-radius: 3px;
-    float: left;
-    padding: 10px;
-    width: 50px;
-}
-.control-panel li {
-  list-style-type: none;
-}
-.control-panel .icon {
-  font-size: 30px;
-}
-
-#videoPlayer {
-  display: block;
-  margin: auto;
-  width: 640px;
-  height: 480px;
-}
-
-#selectMedia {
-  display: block;
-  margin: 40px auto;
-  width: 400px;
-}
-#selectMedia .audio,
-#selectMedia .video {
-    background-color: #00cccb;
-    border-bottom: 3px solid #38979d;
-    border-radius: 3px;
-    color: #ffffff;
-    display: inline-block;
-    font-size: 20px;
-    padding: 10px 40px;
-    text-decoration: none;
-    text-align: center;
-}
-#video #videoPlayer {
-  margin-top: 40px;
-  border: 1px solid #38979d;
-}
-
 /** clearfix **/
 .clearfix:after { content: "."; display: block; clear: both; visibility: hidden; line-height: 0; height: 0; }
 .clearfix { display: inline-block; }

@@ -1,10 +1,7 @@
 'use strict';
 
 module.exports = function(grunt) {
-    var stylus = {
-        options: {
-            'include css': true
-        },
+    var concat = {
         main: {
             files: {
                 'public/css/desktop/main.css': ['client/css/**/*.css', 'client/css/**/*.styl']
@@ -17,5 +14,5 @@ module.exports = function(grunt) {
         }
     };
 
-    return stylus;
+    return concat;
 };

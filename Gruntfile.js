@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('js', ['browserify']);
 
-    grunt.registerTask('css', ['copy:css']);
+    grunt.registerTask('css', ['copy:css', 'copy:cssDesktop', 'copy:cssMob']);
 
     grunt.registerTask('clean', ['exec:removeJs', 'exec:removeCss']);
 

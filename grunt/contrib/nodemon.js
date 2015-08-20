@@ -10,7 +10,7 @@ module.exports = function(grunt) {
             script: 'index',
             options: {
                 env: {
-                    DEBUG: 'chartnado-cli:server*,chartnado-cli:*:error'
+                    DEBUG: ''
                 },
                 ext: 'js,html',
                 ignore: ['client', 'public'],
@@ -23,7 +23,7 @@ module.exports = function(grunt) {
             script: 'index',
             options: {
                 env: {
-                    DEBUG: 'chartnado-cli:*'
+                    DEBUG: ''
                 },
                 ext: 'js,html',
                 ignore: ['client', 'public'],

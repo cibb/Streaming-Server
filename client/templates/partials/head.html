@@ -4,9 +4,15 @@
         <meta charset="utf-8">
         <title>E-radio | Multimedia Streaming </title>
         <link rel="stylesheet" type="text/css" href="/css/default.css"><!-- a deprecar -->
-        <link rel="stylesheet" type="text/css" href="/css/main.css">
         <link rel="stylesheet" type="text/css" href="/css/style-fonts.css">
-    	<link rel="stylesheet" type="text/css" href="/css/style-login.css">
+        <% if (mobile) { %>
+            <link rel="stylesheet" type="text/css" href="/css/mobile/main.css">
+            <link rel="stylesheet" type="text/css" href="/css/mobile/style-login.css">
+        <% } else { %>
+            <link rel="stylesheet" type="text/css" href="/css/desktop/main.css">
+            <link rel="stylesheet" type="text/css" href="/css/desktop/style-login.css">
+        <% } %>
+
     </head>
     <body>
     	<div id="progressBar"></div>

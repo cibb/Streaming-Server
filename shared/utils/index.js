@@ -25,6 +25,17 @@ function getUserAgent(req) {
     return req.get('user-agent');
 }
 
+function isMobile(req) {
+    var userAgent = req.header('user-agent');
+    var mobile = false;
+
+    if (/mobile/i.test(userAgent)) {
+        mobile = true;
+    }
+
+    return mobile;
+}
+
 function sort(params, comparator) {
     var sorted = {};
 
@@ -66,6 +77,7 @@ module.exports = _.extend({
     isServer: isServer,
     daysDiff: daysDiff,
     getUserAgent: getUserAgent,
+    isMobile: isMobile,
     sort: sort,
     keysToLowerCase: keysToLowerCase,
     getUrlParam: getUrlParam,

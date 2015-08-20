@@ -130,3 +130,19 @@ p {
 .hide {
     display: none;
 }
+
+
+/* panel de control */
+.control-panel {
+    background-color: #ffffff;
+    border-radius: 3px;
+    float: left;
+    padding: 10px;
+    width: 50px;
+}
+.control-panel li {
+  list-style-type: none;
+}
+.control-panel .icon {
+  font-size: 30px;
+}

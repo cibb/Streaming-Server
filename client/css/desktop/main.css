@@ -18,23 +18,23 @@ p {
 }
 
 h1 {
-    font-size: 4rem;
+    font-size: 30px;
 }
 
 h2 {
-    font-size: 3.7rem;
+    font-size: 24px;
 }
 
 h3 {
-    font-size: 3rem;
+    font-size: 18px;
 }
 
 h4 {
-    font-size: 2.8rem;
+    font-size: 16px;
 }
 
 p {
-    font-size: 2rem;
+    font-size: 14px;
 }
 #progressBar {
     background: $orange;
@@ -58,19 +58,19 @@ p {
 
 .btn {
     background-color: #00cccb;
-    border-bottom: 15px solid #38979d;
-    border-radius: 7px;
+    border-bottom: 3px solid #38979d;
+    border-radius: 3px;
     color: #ffffff;
     display: inline-block;
-    font-size: 3rem;
-    padding: 40px 40px;
+    font-size: 20px;
+    padding: 10px 40px;
     text-decoration: none;
     text-align: center;
 }
 
 .column-50 {
     float: left;
-    width: 100%;
+    width: 50%;
 }
 
 .errors {
@@ -116,90 +116,17 @@ p {
 .fake-input {
     border: 1px solid #989898;
     border-radius: 3px;
-    padding: 40px;
-}
-
-.fake-input.icon:before {
-    font-size: 3rem;
+    padding: 10px;
 }
 .fake-input.error {
     border: 1px solid #fd7e64;
 }
 
 .fake-input input {
-    font-size: 3rem;
-    padding-left: 20px;
+    font-size: 16px;
+    padding-left: 10px;
 }
 
 .hide {
     display: none;
-}
-
-#videoPlayer {
-  display: block;
-  margin: auto;
-  width: 640px;
-  height: 480px;
-}
-
-#selectMedia {
-    border-radius: 7px;
-    bottom: 0;
-    height: 1150px;
-    margin: auto;
-    overflow: auto;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    width: 435px;
-}
-#selectMedia .audio,
-#selectMedia .video {
-    background-color: #00cccb;
-    border-bottom: 15px solid #38979d;
-    border-radius: 7px;
-    color: #ffffff;
-    display: inline-block;
-    font-size: 3rem;
-    padding: 20px 40px;
-    text-decoration: none;
-    text-align: center;
-}
-#selectMedia .audio {
-    margin-right: 20px;
-}
-#video #videoPlayer {
-  background-color: #ebebeb;
-  border: 5px solid #ebebeb;
-  float: left;
-  margin-top: 40px;
-}
-
-#video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    background-color: #fff;
-    padding: 40px;
-    transform: translate(-50%, -50%);
-}
-
-
-/* panel de control */
-
-.control-panel {
-    background-color: #ffffff;
-    border-radius: 3px;
-    margin: auto;
-    padding: 10px;
-    width: 29%;
-    height: 100px;
-}
-.control-panel li {
-  list-style-type: none;
-  float: left;
-}
-.control-panel .icon {
-  font-size: 5rem;
 }
